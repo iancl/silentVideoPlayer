@@ -143,5 +143,5 @@ module.exports = function(grunt){
     grunt.registerTask('serve', 'connect:devServer');
     grunt.registerTask('serveDeploy', 'connect:deployServer');
     grunt.registerTask('default', 'watch');
-    grunt.registerTask("deploy", ['uglify', 'clean', 'processhtml', 'copy']);
+    grunt.registerTask("deploy", ['uglify']);
 };
