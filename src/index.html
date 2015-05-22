@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VIDEO PLAYER</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta content="width=device-width,  minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <meta charset="utf-8" />
+</head>
+<body>
+
+<div id="wrapper">
+    <div id="" class="s_videoContainer"></div>
+</div>
+
+<!-- build:js js/svideo.min.js -->
+
+<!-- main modules -->
+<script src="js/main.js"></script>
+<script src="js/deviceDetection.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/imageLoader.js"></script>
+<script src="js/previewControls.js"></script>
+<script src="js/video.js"></script>
+<script src="js/canvasPlayer.js"></script>
+<script src="js/videoPlayer.js"></script>
+<script src="js/overlay.js"></script>
+<script src="js/player.js"></script>
+<!-- /build -->
+
+
+
+<script>
+/**
+ * =========== Notes:
+ * 1. You can make the preview video loop by calling the playPreview(); when the onVideoEnd(); callback is invoked
+ * 2. You can show the video overlay by calling the showOverlay(); when the onPreviewTap(); callback is involed.
+ * 3. you can add all kinds of interactivity by using the configuration correctly.
+ * 4. Overlay is optional. You can comment it in the configuration if necessary
+ * 5. Play button and loading spinner are optional too.
+ *
+ * =========== CREATE A NEW PLAYER BY CREATING A NEW INSTANCE OF THE SVIDEO.Player();
+ * new SVIDEO.Player(config);
+ *
+ * =========== PLAYER INSTANCE API
+ * showOverlay()
+ * hideOverlay()
+ * playOverlay()
+ * pauseOverlay()
+ * seekOverlay(percentage:int)
+ * getOverlayVideo()
+ * playPreview()
+ * pausePreview()
+ * seekPreview(percentage:int)
+ * restartPreview()
+ * getPreviewVideo()
+ * hidePreviewVideo()
+ * showPreviewVideo()
+ * destroy()
+ *
+ * =========== FIND THE CONFIGURATION BELOW:
+ */
+    var player;
+
+    if (SVIDEO.Player) {
+        init();
+    }
+
+    function SVIDEOReady(){
+        init();
+    }
+
+    function init(){
+
+        // creating new instance of the player
+        // any valid css property can be added to any of the styles: { } object
+        player = new SVIDEO.Player({
+
+            // html element that will contain the player
+            // the preview player will expand and fill this element
+            selector: document.querySelector(".s_videoContainer"),
+
+            // this is the muted preview
+            preview: {
+                video: {
+                    // there can be multiple sources
+                    sources: [
+                        { src: "assets/video/vid_crop.mp4", type: "mp4"}
+                    ],
+                    // you can add additional attributes
+                    // attributes: ['loop', 'value="property"'],
+
+                    // The frames the canvas player will use
+                    // images should have a name that ends in a sequencial number
+                    // i.e: frame_0.jpg, frame_1.jpg, frame_2.jpg...
+                    // First image should start with the number 0
+                    frames: {
+                        baseName: "assets/video/frames2/frame_",
+                        type: "jpg",                                // Image extension
+                        count: 78,                                  // Total of frames to animate
+                        fps: 8,                                     // speed of the playback
+                        showFPS: false                              // render FPS rate
+                    },
+                },
+
+                // If play button is not needed, you can comment the whole
+                // play button key
+                playButton: {
+                    src: "assets/player/playBtn.png",
+                    styles: {
+                        "width": "64px",
+                        "height": "64px",
+                        "top": "50%",
+                        "left": "50%",
+                        "margin": "-32px 0 0 -32px"
+                    }
+                },
+
+                // loading image can be commented too if it is not necessary
+                loadingImg: {
+                    src: "assets/player/spinner.gif",
+                    styles: {
+                        "width": "36px",
+                        "height": "36px",
+                        "top": "50%",
+                        "left": "50%",
+                        "margin": "-18px 0 0 -18px"
+                    }
+                },
+
+                // Listen to events
+                events: {
+                    onPreviewTap: function(){
+                        // console.log("tap");
+                        // player.showOverlay();
+                    },
+                    onVideoReady: function(){
+                        // player.playPreview();
+                    },
+                    onVideoProgress: function(e){
+                        // console.log("progress", e);
+                    },
+                    onVideoEnd: function(){
+                        // console.log("end");
+                        //player.playPreview();
+                    },
+                    onVideoStart: function(){
+                        // console.log("start");
+                    }
+                }
+            },
+
+            // video overlay
+            // you can comment the whole overlay object if all you want to use
+            // is the video preview
+            overlay: {
+
+                styles: {
+                    "background-color": "rgba(255,255,255,0.8)"
+                },
+                // this is the button that will close the overlay
+                closeImage: {
+                    src: "assets/player/close.png",
+                    styles: {
+                        "width": "34px",
+                        "height": "33px",
+                        "top":"25px",
+                        "right": "25px"
+                    }
+                },
+
+                // the video element inside the overlay
+                video: {
+                    sources: [
+                        { src: "assets/video/vid_crop.mp4", type: "mp4" }
+                    ],
+                    // attributes: ['loop'],
+                    styles: {
+                        "width": "640px",
+                        "height": "360px",
+                        // centering the video below
+                        "top": "50%",
+                        "left": "50%",
+                        "margin": "-180px 0 0 -320px"
+                    }
+                },
+                events: {
+                    // onShowOverlay: function(){
+                    //     console.log("show overlay");
+                    // },
+                    // onHideOverlay: function(event){
+                            // event.videoEnded
+                            // player.playPreview();
+                    // },
+                    // onCloseButtonTapped: function(){
+                    //     console.log("close button tapped");
+                    // },
+                    // onVideoReady: function(){
+                        //console.log("ovideo ready");
+                    // },
+                    // onVideoProgress: function(e){
+                    //     console.log("video progress", e);
+                    // },
+                    // onVideoEnd: function(){
+                    //     console.log("video ended");
+                    // },
+                    // onVideoStart: function(){
+                    //     console.log("video started");
+                    // }
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

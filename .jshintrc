@@ -1,0 +1,31 @@
+{
+    "curly": true,
+    "eqnull": true,
+    "eqeqeq": true,
+    "undef": true,
+    "unused": false,
+    "globals": {
+        "module": false,
+        "require": false,
+        "window": false,
+        "console": false,
+        "document": false,
+        "setTimeout": false,
+        "setInterval": false,
+        "clearInterval": false,
+        "clearTimeout": false,
+        "alert": false,
+        "onAPILoaded": false,
+        "navigator": false,
+        "SVIDEO": false,
+        "Image": false,
+        "requestAnimationFrame": false,
+        "cancelAnimationFrame": false,
+        "describe": false,
+        "it": false,
+        "spyOn": false,
+        "beforeEach": false,
+        "expect": false,
+        "afterEach": false
+    }
+}
